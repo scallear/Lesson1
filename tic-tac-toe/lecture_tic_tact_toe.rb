@@ -54,14 +54,23 @@ def player_choice(spaces, side)
 end
 
 def computer_choice(spaces, side)
-	choice= empty_spaces(spaces).sample
+	choice = empty_spaces(spaces).sample
 	spaces[choice] = side
 end
 
+def check_win(spaces)
+	winning_lines = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+	winning_lines.each do |line| 
+		return "X" if spaces.values_at(*line).count("X") == 3
+		return "O" if spaces.values_at(*line).count("O") == 3
+	end
+	nil
+end
 #Game-----------------------------------------------------------
 
 puts "Welcome to Tic-Tac-Toe!"
 
+#Choosing sides.................................................
 begin
 	puts "Choose your side, X or O:"
 	player = gets.chomp.upcase
@@ -69,31 +78,47 @@ end until player == "O" || player == "X"
 
 if player == "O"
 	computer = "X"
-	puts "You chose O's the computer will be X's."
+	puts "You chose O's the computer will be X's. Press [enter] to continue..."
+	gets
 else
 	computer = "O"
-	puts "You chose X's the computer will be O's."
+	puts "You chose X's the computer will be O's. Press [enter] to continue..."
+	gets
 end
 
 spaces = initialize_spaces
 
 draw_board(spaces)
 
+#The play...............................................................
 if player == "X"
 	begin
 		player_choice(spaces, player)
 		computer_choice(spaces, computer)
 		draw_board(spaces)
-	end until empty_spaces(spaces) == []
+		winner = check_win(spaces)
+	end until winner || empty_spaces(spaces).empty?
 else
 	begin
 		computer_choice(spaces, computer)
-		player_choice(spaces, player)
 		draw_board(spaces)
-	end until empty_spaces(spaces) ==[]
+		if empty_spaces(spaces).empty?
+			break
+		else
+			player_choice(spaces, player)
+		end
+		winner = check_win(spaces)
+	end until winner || empty_spaces(spaces).empty?
 end
 
-draw_board(spaces)
+#Win message...........................................................
+if winner == player
+	puts "#{winner}'s won! Cograts, you beat the computer!"
+elsif winner == computer
+	puts "#{winner}'s won! Sorry, you lost...try again next time."
+else
+	puts "Cat game! It's a tie. Good game."
+end
 
 
 
