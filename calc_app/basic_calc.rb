@@ -1,5 +1,3 @@
-require 'pry'
-
 def say(msg)
   puts "\n=> #{msg}"
 end
@@ -8,8 +6,8 @@ def check_num(num)
   num =~ /\d/
 end
 
-def check_operand(operand)
-  operand =~ /[+\-*\/]/
+def check_operator(operator)
+  operator =~ /[+\-*\/]/
 end
 
 system 'clear'
@@ -28,9 +26,9 @@ begin
   end until check_num(num2)
   
   begin
-    say "Enter + for addition; - for subtraction; * for multiplication; / for division"
+    say "What's the operator?\nEnter + for addition; - for subtraction; * for multiplication; / for division"
     operator = gets.chomp
-  end until check_operand(operator)
+  end until check_operator(operator)
 
   if operator== "+"
     results = num1.to_i + num2.to_i
