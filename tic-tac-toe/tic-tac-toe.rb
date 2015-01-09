@@ -1,13 +1,38 @@
-#constant
+#Constant
 
 WINNING_LINES = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
 
 #Methods-------------------------------------------------------------
 
-def initialize_spaces
-	spaces = {}
-	(1...10).each{|position| spaces[position] = position}
-	spaces
+def check_two(spaces)
+  choices = nil
+  WINNING_LINES.each do |line|
+   	if spaces.values_at(*line).count("X") == 2
+   		choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
+   		break
+   	elsif spaces.values_at(*line).count("O") == 2
+   		choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
+      break
+   	end
+  end
+  return choices
+end
+
+def check_win(spaces)
+	WINNING_LINES.each do |line| 
+		return "X" if spaces.values_at(*line).count("X") == 3
+		return "O" if spaces.values_at(*line).count("O") == 3
+	end
+	nil
+end
+
+def computer_choice(spaces, side)
+	if check_two(spaces)
+		choice = check_two(spaces)
+	else
+		choice = empty_spaces(spaces).sample
+	end
+	spaces[choice] = side
 end
 
 def draw_board(s)
@@ -20,7 +45,18 @@ def draw_board(s)
 end
 
 def empty_spaces(spaces)
-	spaces.select{|k,v| v.is_a? Numeric}.keys
+	spaces.select{|key, value| value.is_a? Numeric}.keys
+end
+
+def initialize_spaces
+	spaces = {}
+	(1...10).each{|position| spaces[position] = position}
+	spaces
+end
+
+def play_again
+	puts "Would you like to try again?"
+	gets.chomp.upcase
 end
 
 def player_choice(spaces, side)
@@ -31,42 +67,6 @@ def player_choice(spaces, side)
 		choice = gets.chomp.to_i
 	end 
 	spaces[choice] = side
-end
-
-def check_two(spaces)
-    choices = nil
-    WINNING_LINES.each do |line|
-    	if spaces.values_at(*line).count("X") == 2
-    		choices = spaces.values_at(*line).select{|v| v.is_a? Numeric}.first
-    		break
-    	elsif spaces.values_at(*line).count("O") == 2
-    		choices = spaces.values_at(*line).select{|v| v.is_a? Numeric}.first
-            break
-    	end
-    end
-    return choices
-end
-
-def computer_choice(spaces, side)
-	if check_two(spaces)
-		choice = check_two(spaces)
-	else
-		choice = empty_spaces(spaces).sample
-	end
-	spaces[choice] = side
-end
-
-def check_win(spaces)
-	WINNING_LINES.each do |line| 
-		return "X" if spaces.values_at(*line).count("X") == 3
-		return "O" if spaces.values_at(*line).count("O") == 3
-	end
-	nil
-end
-
-def play_again
-	puts "Would you like to try again?"
-	gets.chomp.upcase
 end
 
 #Game-----------------------------------------------------------
@@ -129,7 +129,5 @@ begin
 	end
 
 end until replay != "Y"
-
-
 
 #fin...........................
