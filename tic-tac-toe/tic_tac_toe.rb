@@ -8,7 +8,7 @@ def check_two(spaces)
   choices = nil
   WINNING_LINES.each do |line|
   	if spaces.values_at(*line).count("X") == 2
-   		choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
+      choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
    		break
    	elsif spaces.values_at(*line).count("O") == 2
    		choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
