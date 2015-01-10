@@ -7,7 +7,7 @@ WINNING_LINES = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], 
 def check_two(spaces)
   choices = nil
   WINNING_LINES.each do |line|
-   	if spaces.values_at(*line).count("X") == 2
+  	if spaces.values_at(*line).count("X") == 2
    		choices = spaces.values_at(*line).select{|value| value.is_a? Numeric}.first
    		break
    	elsif spaces.values_at(*line).count("O") == 2
