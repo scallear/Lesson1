@@ -1,12 +1,19 @@
-#Ask for nouns, verbs, and adjectives
-#Open the file
-#Search/parse for NOUNS, VERB, and ADJECTIVES
-#Replace text with
+nouns = File.open('nouns.txt', 'r') do |file|
+  file.read
+end.split
+
+verbs = File.open('verbs.txt', 'r') do |file|
+  file.read
+end.split
+
+adjectives = File.open('adjectives.txt', 'r') do |file|
+  file.read
+end.split
 
 dictionary = {
-  nouns: ['dog', 'car', 'clown', 'hat'],
-  verbs: ['juggle', 'spin'],
-  adjectives: ['giant', 'red']
+  nouns: nouns,
+  verbs: verbs,
+  adjectives: adjectives
 }
 
 def say(message)
@@ -25,11 +32,16 @@ contents = File.open(ARGV[0], 'r') do |f|
   f.read
 end
 
-contents.gsub!('<NOUN>', dictionary[:nouns].sample)
+contents.gsub!('<NOUN>').each do
+  dictionary[:nouns].sample
+end
 
-contents.gsub!('<NOUN>').each do |noun|
+contents.gsub!('<VERB>').each do
+  dictionary[:verbs].sample
+end
 
-contents.gsub!('<VERB>', dictionary[:verbs].sample)
-contents.gsub!('<ADJECTIVE>', dictionary[:adjectives].sample)
+contents.gsub!('<ADJECTIVE>').each do
+  dictionary[:adjectives].sample
+end
 
 p contents
