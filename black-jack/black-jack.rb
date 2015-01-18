@@ -23,7 +23,9 @@ end
 
 puts "Welcome to black jack!\nLadies and Gentlemen place your bets!"
 
-binding.pry
 
 
+p deck
 
+card = deck[:heart].pop
+p deck
