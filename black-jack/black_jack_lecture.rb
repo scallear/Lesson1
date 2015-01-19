@@ -1,6 +1,12 @@
+require 'pry'
+
 suit = ["♥", "♦", "♣", "♠" ]
 
 cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
+
+def play() 
+
+end
 
 def show_cards(player)
   cards = ""
@@ -40,5 +46,19 @@ computer_cards << deck.pop
 my_cards << deck.pop
 computer_cards << deck.pop
 
-puts "Your have #{show_cards(my_cards)}for a total of #{total(my_cards)}"
+
 puts "The computer has the #{computer_cards[1][0]}#{computer_cards[1][1]} showing."
+puts "Your have #{show_cards(my_cards)}for a total of #{total(my_cards)}"
+
+begin
+  puts "Would you like to hit or stay? (hit/stay)"
+  hit_stay = gets.chomp.downcase
+end until hit_stay == "hit" || hit_stay == "stay"
+
+
+
+
+
+
+
+
