@@ -44,6 +44,8 @@ computer_cards << deck.pop
 
 puts "The computer has the #{computer_cards[1][0]}#{computer_cards[1][1]} showing."
 
+#Player Turn
+
 begin
   puts "Your have #{show_cards(my_cards)}for a total of #{total(my_cards)}."
   begin
@@ -57,8 +59,37 @@ begin
   end
 end until total(my_cards) >= 21
 
-puts "#{total(my_cards)} #{show_cards(my_cards)}"
-puts "#{total(computer_cards)} #{show_cards(computer_cards)}"
+#Computer Turn
+
+until total(computer_cards) >= 17 || total(my_cards) > 21
+  computer_cards << deck.pop
+end
+
+#computer wins - player busts
+#computer  wins - total(comp) > total(player)
+#player wins - computer busts
+#player wins - total(player) > total(comp)
+#tie -player and computer get 21
+
+if total(my_cards) > 21
+  puts "Sorry, you lose. Your cards, #{show_cards(my_cards)}, equal #{total(my_cards)}, you busted!"
+elsif total(computer_cards)> 21
+  puts "Congrats you win! The computer's cards, #{show_cards(computer_cards)}, equal #{total(computer_cards)}; the computer busted."
+elsif total(computer_cards) == total(my_cards)
+  puts "Your cards are #{show_cards(my_cards)}, for a total of #{total(my_cards)}."
+  puts "The computer's cards are #{show_cards(computer_cards)}, for a total of #{total(computer_cards)}."  
+  puts "You tied..."
+elsif total(computer_cards) > total(my_cards)
+  puts "Your cards are #{show_cards(my_cards)}, for a total of #{total(my_cards)}."
+  puts "The computer's cards are #{show_cards(computer_cards)}, for a total of #{total(computer_cards)}."  
+  puts "Sorry, you lose"
+elsif total(computer_cards) < total(my_cards)
+  puts "Your cards are #{show_cards(my_cards)}, for a total of #{total(my_cards)}."
+  puts "The computer's cards are #{show_cards(computer_cards)}, for a total of #{total(computer_cards)}."  
+  puts "Congrats, you win!"
+end
+
+
 
 
 
