@@ -30,7 +30,7 @@ def total(player_cards)
 end
 
 def payout(player_total, bet, deck, computer_total=nil)
-  multiplier = 0
+  multiplier = 0 #Single deck has a slightly worse payout for blackjack
   if deck == 1
     multiplier = 1.2
   else
@@ -46,8 +46,8 @@ def payout(player_total, bet, deck, computer_total=nil)
 end
 
 #Game Start
-puts "Welcome to balckjack! You've been given $10 to start, see how long you last. If you make it to $50, you win!"
-user_money = 10
+puts "Welcome to balckjack! You've been given $25 to start, see how long you last. If you make it to $50, you win!"
+user_money = 25
 
 puts "What type of game would you like to play? Enter 1 for a single or 2 for a double deck?"
 deck_type = gets.chomp.to_i
@@ -93,7 +93,7 @@ begin
   
   #Player Turn
   until user_total >= 21
-    puts "You have #{show_cards(user_cards)}for a total of #{user_total}."
+    puts "You have the #{show_cards(user_cards).strip}for a total of #{user_total}."
     begin
       puts "\nWould you like to hit or stay? (hit/stay)"
       hit_stay = gets.chomp.downcase
@@ -111,7 +111,6 @@ begin
     computer_cards << deck.pop
     computer_total = total(computer_cards)
   end
-
   
   #Payout
   if user_total == 21
@@ -121,7 +120,7 @@ begin
       puts "You tied..."
       user_money += payout(user_total, user_bet, deck_type, computer_total)
     else
-      puts "You win! You got blackjack!"
+      puts "With the #{show_cards(user_cards).strip}, you got blackjack! You win!"
       user_money += payout(user_total, user_bet, deck_type)
     end
   elsif user_total > 21
@@ -149,7 +148,7 @@ begin
   
 end until user_money < 5 || user_money >= 50
 
-if user_money == 50
+if user_money >= 50
   puts "You beat the house! Congrats!"
 else
   puts "You're broke. Better luck next time..."
